@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Sprint } from 'mock-sprint';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { SubjectService } from '../services/subject.service';
 
@@ -11,8 +12,15 @@ export class SubjectComponent implements OnInit {
     constructor(private subjectService: SubjectService) {}
 
     value: string = 'Subject';
+    selectedSprint?: Sprint;
 
     ngOnInit(): void {
+        // フォームのサンプル
         this.subjectService.subject.subscribe((data) => (this.value = data));
+
+        // 選択中のSprintを購読
+        this.subjectService.sprintSubject.subscribe(
+            (res) => (this.selectedSprint = res)
+        );
     }
 }

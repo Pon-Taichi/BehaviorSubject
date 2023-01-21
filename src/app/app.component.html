@@ -1,6 +1,21 @@
+<!-- フォームのサンプル -->
 <h1>{{ value }}</h1>
 <input type="text" #input />
 <button (click)="onClick(input.value)">送信</button>
-<hr />
+<!-- ここまで -->
 
+<div>
+    <label for="select">Sprintを選択 </label>
+    <select id="select" #sprint (change)="onChange(sprint.value)">
+        <option
+            *ngFor="let sprint of sprintList"
+            [selected]="isCurrentSprint(sprint)"
+        >
+            {{ sprint.name }}
+        </option>
+    </select>
+    <p>選択中: {{ selectedSprint.name }}</p>
+</div>
+
+<hr />
 <app-subject></app-subject>
