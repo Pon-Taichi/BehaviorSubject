@@ -1,3 +1,6 @@
 <h1>{{ value }}</h1>
+<input type="text" #input />
+<button (click)="onClick(input.value)">送信</button>
 <hr />
+
 <app-subject></app-subject>

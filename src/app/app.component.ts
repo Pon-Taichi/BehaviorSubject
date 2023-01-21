@@ -14,4 +14,8 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.subjectService.subject.subscribe((data) => (this.value = data));
     }
+
+    onClick(input: string): void {
+        this.subjectService.update(input);
+    }
 }

@@ -15,8 +15,4 @@ export class SubjectComponent implements OnInit {
     ngOnInit(): void {
         this.subjectService.subject.subscribe((data) => (this.value = data));
     }
-
-    onClick(input: string): void {
-        this.subjectService.update(input);
-    }
 }
