@@ -1,10 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SubjectService } from './services/subject.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  title = 'learn-subject';
+export class AppComponent implements OnInit {
+    constructor(private subjectService: SubjectService) {}
+    title = 'learn-subject';
+    value: string = 'App';
+
+    ngOnInit() {
+        this.subjectService.subject.subscribe((data) => (this.value = data));
+    }
 }
