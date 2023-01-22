@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
     value: string = 'App';
 
-    selectedSprint = this.subjectService.sprintSubject.getValue();
+    selectedSprint: Sprint = this.subjectService.sprintSubject.getValue();
 
     sprintList: Sprint[] = [this.selectedSprint];
 
@@ -28,18 +28,20 @@ export class AppComponent implements OnInit {
 
         // Sprint一覧を取得
         this.subjectService.getSprintList().subscribe((res) => {
-            // Sprint一覧から現在のSprintを取得
-            console.log('currentSprintを取得');
-            const currentSprint = res.find((s) => this.isCurrentSprint(s));
+            if (res.length) {
+                // Sprint一覧から現在のSprintを取得
+                console.log('currentSprintを取得');
+                const currentSprint = res.find((s) => this.isCurrentSprint(s));
 
-            if (currentSprint) {
-                console.log('currentSprintをselectedSprintへ流す');
-                // 現在のSprintを選択中Sprint更新メソッドへ渡す
-                this.subjectService.updateSelectedSprint(currentSprint);
+                if (currentSprint) {
+                    console.log('currentSprintをselectedSprintへ流す');
+                    // 現在のSprintを選択中Sprint更新メソッドへ渡す
+                    this.subjectService.updateSelectedSprint(currentSprint);
+                }
+
+                // Sprint一覧を初期値に追加
+                this.sprintList = res;
             }
-
-            // Sprint一覧を初期値に追加
-            this.sprintList = res;
         });
     }
 
