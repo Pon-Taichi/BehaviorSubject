@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Sprint } from 'mock-sprint';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { SubjectService } from '../services/subject.service';
 
 @Component({
@@ -12,16 +12,21 @@ export class SubjectComponent implements OnInit {
     constructor(private subjectService: SubjectService) {}
 
     value: string = 'Subject';
-    selectedSprint: Sprint = this.subjectService.sprintSubject.getValue();
+    selectedSprint$: Observable<Sprint> =
+        this.subjectService.sprintSubject.asObservable();
+
+    selectedSprintName$: Observable<string> = this.selectedSprint$.pipe(
+        map((sprint) => sprint.name)
+    );
 
     ngOnInit(): void {
         // フォームのサンプル
         this.subjectService.subject.subscribe((data) => (this.value = data));
 
-        // 選択中のSprintを購読
-        this.subjectService.sprintSubject.subscribe((res) => {
-            console.log('selectedSprintを購読: Subject');
-            this.selectedSprint = res;
-        });
+        // 以下不要
+        // this.subjectService.sprintSubject.subscribe((res) => {
+        //     console.log('selectedSprintを購読: Subject');
+        //     this.selectedSprint = res;
+        // });
     }
 }

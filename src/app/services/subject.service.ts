@@ -16,8 +16,7 @@ export class SubjectService {
     sprintSubject = new BehaviorSubject<Sprint>(this.initialData);
 
     getSprintList(): Observable<Sprint[]> {
-        const sprintList = of(SPRINT_LIST);
-        return sprintList;
+        return of(SPRINT_LIST);
     }
 
     update(data: string) {
