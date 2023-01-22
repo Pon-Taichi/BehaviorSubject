@@ -8,10 +8,15 @@ import { BehaviorSubject, Observable, of, Subject, tap } from 'rxjs';
 export class SubjectService {
     subject = new Subject<string>();
 
-    sprintSubject = new Subject<Sprint>();
+    initialData: Sprint = {
+        id: 'initial',
+        name: '------',
+        timeFrame: 'initial',
+    };
+    sprintSubject = new BehaviorSubject<Sprint>(this.initialData);
 
     getSprintList(): Observable<Sprint[]> {
-        const sprintList = of(SPRINT_LIST).pipe(tap());
+        const sprintList = of(SPRINT_LIST);
         return sprintList;
     }
 

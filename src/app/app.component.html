@@ -6,7 +6,7 @@
 
 <div>
     <label for="select">Sprintを選択 </label>
-    <select id="select" #sprint (change)="onChange(sprint.value)">
+    <select id="select" #sprint (change)="onSelect(sprint.value)">
         <option
             *ngFor="let sprint of sprintList"
             [selected]="isCurrentSprint(sprint)"

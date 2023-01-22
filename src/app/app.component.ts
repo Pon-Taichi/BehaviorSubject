@@ -12,14 +12,9 @@ export class AppComponent implements OnInit {
 
     value: string = 'App';
 
-    initialData: Sprint = {
-        id: '0',
-        name: '------',
-        timeFrame: 'initial',
-    };
+    selectedSprint = this.subjectService.sprintSubject.getValue();
 
-    sprintList: Sprint[] = [this.initialData];
-    selectedSprint: Sprint = this.initialData;
+    sprintList: Sprint[] = [this.selectedSprint];
 
     ngOnInit() {
         // フォームのサンプル
@@ -27,21 +22,24 @@ export class AppComponent implements OnInit {
 
         // 選択中のSprintを購読
         this.subjectService.sprintSubject.subscribe((res) => {
+            console.log('selectedSprintを購読: App');
             this.selectedSprint = res;
         });
 
         // Sprint一覧を取得
         this.subjectService.getSprintList().subscribe((res) => {
             // Sprint一覧から現在のSprintを取得
-            const sprint = res.find((s) => this.isCurrentSprint(s));
+            console.log('currentSprintを取得');
+            const currentSprint = res.find((s) => this.isCurrentSprint(s));
 
-            if (sprint) {
+            if (currentSprint) {
+                console.log('currentSprintをselectedSprintへ流す');
                 // 現在のSprintを選択中Sprint更新メソッドへ渡す
-                this.subjectService.updateSelectedSprint(sprint);
+                this.subjectService.updateSelectedSprint(currentSprint);
             }
 
             // Sprint一覧を初期値に追加
-            this.sprintList.push(...res);
+            this.sprintList = res;
         });
     }
 
@@ -51,10 +49,10 @@ export class AppComponent implements OnInit {
     }
 
     // 選択したSprintをselectedSprint更新用メソッドへ渡す
-    onChange(sprintName: string) {
+    onSelect(sprintName: string) {
         const sprint = this.sprintList.find((s) => s.name === sprintName);
-        if (!sprint || sprint.id === '0') return;
-
+        if (!sprint || sprint.id === 'initial') return;
+        console.log('選択したsprintをselectedSprintへ流す');
         this.subjectService.updateSelectedSprint(sprint);
     }
 

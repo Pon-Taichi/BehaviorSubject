@@ -12,15 +12,16 @@ export class SubjectComponent implements OnInit {
     constructor(private subjectService: SubjectService) {}
 
     value: string = 'Subject';
-    selectedSprint?: Sprint;
+    selectedSprint: Sprint = this.subjectService.sprintSubject.getValue();
 
     ngOnInit(): void {
         // フォームのサンプル
         this.subjectService.subject.subscribe((data) => (this.value = data));
 
         // 選択中のSprintを購読
-        this.subjectService.sprintSubject.subscribe(
-            (res) => (this.selectedSprint = res)
-        );
+        this.subjectService.sprintSubject.subscribe((res) => {
+            console.log('selectedSprintを購読: Subject');
+            this.selectedSprint = res;
+        });
     }
 }
